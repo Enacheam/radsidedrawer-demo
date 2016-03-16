@@ -4,30 +4,33 @@ import {RadSideDrawer} from "sidedrawer";
 import {Label} from "ui/label";
 import {Page} from "ui/page";
 import {ActionItem} from "ui/action-bar";
-import {HotPink} from "color/known-colors";
-import {SideDrawerMainDirective, SideDrawerDrawerDirective} from "./side-drawer-directives";
-
+import {RadSideDrawerComponent, SideDrawerType, MainTemplateDirective, DrawerTemplateDirective} from "./side-drawer-directives";
 
 @Component({
     selector: "my-app",
-    directives: [SideDrawerMainDirective, SideDrawerDrawerDirective],
+    directives: [RadSideDrawerComponent, MainTemplateDirective, DrawerTemplateDirective],
     template: `
-    <RadSideDrawer #drawer></RadSideDrawer>
-    <Label *sideDrawerMain="drawer" text="MMMMMMAIN"></Label>
-    <Label *sideDrawerDrawer="drawer" text="SSSSSIDE"
-        style="background-color: hotpink; color: white; font-weight: bold"></Label>
+    <RadSideDrawer #drawer>
+        <template drawerSide>
+            <Label text="SSSSSIDE"
+                style="background-color: hotpink; color: white; font-weight: bold">
+            </Label>
+        </template>
+        <Label *drawerMain text="MMMMMMAIN!"></Label>
+    </RadSideDrawer>
 `,
 })
 export class AppComponent {
     constructor(@Inject(Page) private page: Page) {
     }
 
-    @ViewChild("drawer") public drawerElement: ElementRef;
-    private drawer: RadSideDrawer & View & {toggleDrawerState: () => void};
+    @ViewChild(RadSideDrawerComponent) public drawerComponent: RadSideDrawerComponent;
+    private drawer: SideDrawerType;
     public message: string = "Hello, Angular!";
 
     ngAfterViewInit() {
-        this.drawer = this.drawerElement.nativeElement;
+        console.log(this.drawerComponent.constructor);
+        this.drawer = this.drawerComponent.sideDrawer;
         console.log("drawer type: " + this.drawer.constructor);
 
         const sideDrawerItem = new ActionItem();
