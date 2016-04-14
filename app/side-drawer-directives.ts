@@ -47,6 +47,9 @@ export class RadSideDrawerComponent {
                             node.nodeName && node.nodeName !== '#text')
 
         if (mainViews.length > 0) {
+            if (this.sideDrawer.parent) {
+                this.sideDrawer.parent._removeView(this.sideDrawer);
+            }
             this.page.content = this.sideDrawer;
 
             const viewRoot = mainViews[0];
