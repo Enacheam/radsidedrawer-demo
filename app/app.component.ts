@@ -1,7 +1,6 @@
 import {Component, ElementRef, ViewChild, Inject} from "angular2/core";
 import {RouteConfig} from 'angular2/router';
 import {View} from "ui/core/view";
-import {RadSideDrawer} from "sidedrawer";
 import {Label} from "ui/label";
 import {Page} from "ui/page";
 import {ActionItem} from "ui/action-bar";
@@ -16,11 +15,12 @@ import {NS_ROUTER_DIRECTIVES} from "nativescript-angular/router/ns-router";
     template: `
     <RadSideDrawer #drawer>
         <template drawerSide>
-            <Label text="SSSSSIDE"
-                style="background-color: hotpink; color: white; font-weight: bold">
-            </Label>
+            <Label text="SSSSSIDE" class="side-label"></Label>
         </template>
-        <Label *drawerMain text="MMMMMMAIN!"></Label>
+        <StackLayout *drawerMain>
+            <Label text="MMMMMMAIN!"></Label>
+            <Button text="Side" (tap)="toggleDrawer()"></Button>
+        </StackLayout>
     </RadSideDrawer>
 `,
 })
@@ -33,14 +33,16 @@ export class PageComponent {
     public message: string = "Hello, Angular!";
 
     ngAfterViewInit() {
-        console.log(this.drawerComponent.constructor);
         this.drawer = this.drawerComponent.sideDrawer;
-        console.log("drawer type: " + this.drawer.constructor);
 
         const sideDrawerItem = new ActionItem();
         sideDrawerItem.text = "OPEN";
-        sideDrawerItem.on("tap", () => this.drawer.toggleDrawerState());
+        sideDrawerItem.on("tap", () => this.toggleDrawer());
         this.page.actionBar.actionItems.addItem(sideDrawerItem);
+    }
+
+    public toggleDrawer() {
+        this.drawer.toggleDrawerState();
     }
 }
 

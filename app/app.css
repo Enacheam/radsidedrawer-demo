@@ -3,3 +3,9 @@
     horizontal-align: center;
     margin:20;
 }
+
+.side-label {
+    background-color: hotpink;
+    color: lime;
+    font-weight: bold;
+}

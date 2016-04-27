@@ -12,7 +12,7 @@ import {
     ContentChildren,
     QueryList,
 } from "angular2/core";
-import {RadSideDrawer} from "sidedrawer";
+import {RadSideDrawer} from "nativescript-telerik-ui/sidedrawer";
 import {View} from "ui/core/view";
 import {Page} from "ui/page";
 
